@@ -1,4 +1,4 @@
-import { SET_ARTICLES } from '../actionTypes';
+import { SET_ARTICLES, SET_URL } from '../actionTypes';
 
 const initialState = {
   page: 1,
@@ -14,6 +14,11 @@ export default (state = initialState, action) => {
         page: action.page,
         totalPages: action.totalPages,
         articles: action.articles,
+      };
+    case SET_URL:
+      return {
+        ...state,
+        url: action.url,
       };
     default:
       return state;

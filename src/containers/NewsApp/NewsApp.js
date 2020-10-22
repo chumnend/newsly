@@ -2,7 +2,12 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Articles from '../../components/Articles';
 import SearchBar from '../../components/SearchBar';
-import { fetchTopHeadlines, fetchHeadlinesBySearch } from '../../store/actions';
+import {
+  fetchTopHeadlines,
+  fetchHeadlinesBySearch,
+  fetchNextPage,
+  fetchPrevPage,
+} from '../../store/actions';
 
 function NewsApp(props) {
   const { fetchTopHeadlines } = props;
@@ -16,8 +21,12 @@ function NewsApp(props) {
       <h1>News App</h1>
       <SearchBar makeSearch={props.fetchHeadlinesBySearch} />
       <Articles articles={props.news.articles} />
-      <button>Prev</button>
-      <button>Next</button>
+      {props.news.page > 1 && (
+        <button onClick={props.fetchPrevPage}>Prev</button>
+      )}
+      {props.news.page < props.news.totalPages && (
+        <button onClick={props.fetchNextPage}>Next</button>
+      )}
     </div>
   );
 }
@@ -33,6 +42,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchTopHeadlines: () => dispatch(fetchTopHeadlines()),
     fetchHeadlinesBySearch: (search) =>
       dispatch(fetchHeadlinesBySearch(search)),
+    fetchNextPage: () => dispatch(fetchNextPage()),
+    fetchPrevPage: () => dispatch(fetchPrevPage()),
   };
 };
 

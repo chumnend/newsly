@@ -1,1 +1,6 @@
-export { fetchTopHeadlines, fetchHeadlinesBySearch } from './news.actions';
+export {
+  fetchTopHeadlines,
+  fetchHeadlinesBySearch,
+  fetchNextPage,
+  fetchPrevPage,
+} from './news.actions';
