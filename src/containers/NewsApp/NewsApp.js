@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchTopHeadlines } from '../../store/actions';
+import Articles from '../../components/Articles';
+import SearchBar from '../../components/SearchBar';
+import { fetchTopHeadlines, fetchHeadlinesBySearch } from '../../store/actions';
 
-const NewsApp = (props) => {
+function NewsApp(props) {
   const { fetchTopHeadlines } = props;
 
   useEffect(() => {
@@ -12,23 +14,13 @@ const NewsApp = (props) => {
   return (
     <div>
       <h1>News App</h1>
-      <div>
-        <label htmlFor="search">Search</label>
-        <input id="search" type="search" />
-        <button>Search</button>
-      </div>
-      <ul>
-        {props.news.articles.map((article) => (
-          <li key={article.url}>
-            {article.title} - {article.author}
-          </li>
-        ))}
-      </ul>
+      <SearchBar makeSearch={props.fetchHeadlinesBySearch} />
+      <Articles articles={props.news.articles} />
       <button>Prev</button>
       <button>Next</button>
     </div>
   );
-};
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -39,6 +31,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchTopHeadlines: () => dispatch(fetchTopHeadlines()),
+    fetchHeadlinesBySearch: (search) =>
+      dispatch(fetchHeadlinesBySearch(search)),
   };
 };
 

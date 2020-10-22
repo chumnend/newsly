@@ -10,6 +10,7 @@ export default (state = initialState, action) => {
     case SET_ARTICLES:
       return {
         ...state,
+        page: action.page,
         articles: action.articles,
       };
     default:
