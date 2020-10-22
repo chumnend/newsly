@@ -13,6 +13,7 @@ function Articles(props) {
             key={article.url}
             title={article.title}
             author={article.author ? article.author : 'Unknown'}
+            url={article.url}
           />
         ))}
       </ul>

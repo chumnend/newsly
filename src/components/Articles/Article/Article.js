@@ -4,7 +4,15 @@ import PropTypes from 'prop-types';
 function Article(props) {
   return (
     <li>
-      {props.title} - {props.author}
+      <p>
+        <strong>{props.title}</strong>
+      </p>
+      <p>
+        <strong>{props.author}</strong>
+      </p>
+      <a href={props.url} rel="noopener noreferrer" target="_blank">
+        Link
+      </a>
     </li>
   );
 }
@@ -12,6 +20,7 @@ function Article(props) {
 Article.propTypes = {
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 export default Article;
