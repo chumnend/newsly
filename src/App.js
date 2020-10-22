@@ -1,10 +1,15 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import NewsApp from './containers/NewsApp';
+import { configureStore } from './store';
+
+const store = configureStore();
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
+    <Provider store={store}>
+      <NewsApp />
+    </Provider>
   );
 }
 
