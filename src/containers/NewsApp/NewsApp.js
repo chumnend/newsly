@@ -8,6 +8,7 @@ import {
   fetchNextPage,
   fetchPrevPage,
 } from '../../store/actions';
+import classes from './NewsApp.module.css';
 
 const NewsApp = () => {
   const news = useSelector((state) => {
@@ -16,23 +17,41 @@ const NewsApp = () => {
 
   const dispatch = useDispatch();
   const onInit = useCallback(() => dispatch(fetchTopHeadlines()), [dispatch]);
-  const onSearch = (search) => dispatch(fetchHeadlinesBySearch(search));
-  const onNextPage = () => dispatch(fetchNextPage());
-  const onPrevPage = () => dispatch(fetchPrevPage());
+  const onSearch = useCallback(
+    (search) => dispatch(fetchHeadlinesBySearch(search)),
+    [dispatch],
+  );
+  const onNextPage = useCallback(() => dispatch(fetchNextPage()), [dispatch]);
+  const onPrevPage = useCallback(() => dispatch(fetchPrevPage()), [dispatch]);
 
   useEffect(() => {
     onInit();
   }, [onInit]);
 
   return (
-    <div>
-      <h1>Newsly</h1>
+    <div className={classes.NewsApp}>
+      <div className={classes.Banner}>
+        <h1>Newsly</h1>
+        <h3>Finding news stories for you!</h3>
+      </div>
       <SearchBar makeSearch={onSearch} />
       <Articles articles={news.articles} />
-      {news.page > 1 && <button onClick={onPrevPage}>Prev</button>}
-      {news.page < news.totalPages && (
-        <button onClick={onNextPage}>Next</button>
-      )}
+      <div className={classes.Options}>
+        <button
+          className={classes.OptionButton}
+          onClick={onPrevPage}
+          disabled={news.page === 1}
+        >
+          Previous
+        </button>
+        <button
+          className={classes.OptionButton}
+          onClick={onNextPage}
+          disabled={news.page === news.totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

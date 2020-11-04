@@ -1,0 +1,26 @@
+.Article {
+  margin: 0.8rem 0;
+  padding: 1rem;
+  background: #eee;
+  border-radius: 10px;
+}
+
+.Title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.Author {
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.Link {
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  background: #ff2058;
+  color: #fff;
+}

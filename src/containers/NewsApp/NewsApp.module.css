@@ -1,0 +1,36 @@
+.NewsApp {
+  width: 80%;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.Banner {
+  padding: 1rem;
+  text-align: center;
+  background-color: #ff2058;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.Options {
+  padding: 1rem;
+  background-color: #ff2058;
+  display: flex;
+  justify-content: space-between;
+}
+
+.OptionButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+.OptionButton:disabled {
+  visibility: hidden;
+}

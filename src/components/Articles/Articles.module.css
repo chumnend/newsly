@@ -1,0 +1,13 @@
+.Articles {
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+}
+
+.List {
+  list-style: none;
+}
+
+.Message {
+  text-align: center;
+}
