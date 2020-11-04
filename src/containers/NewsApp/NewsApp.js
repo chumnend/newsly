@@ -1,50 +1,78 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Articles from '../../components/Articles';
 import SearchBar from '../../components/SearchBar';
+import Loader from '../../components/Loader';
 import {
   fetchTopHeadlines,
   fetchHeadlinesBySearch,
+  fetchHeadlinesBySource,
   fetchNextPage,
-  fetchPrevPage,
+  fetchPreviousPage,
 } from '../../store/actions';
+import classes from './NewsApp.module.css';
 
-function NewsApp(props) {
-  const { fetchTopHeadlines } = props;
+const NewsApp = () => {
+  const news = useSelector((state) => {
+    return state.news;
+  });
+
+  const dispatch = useDispatch();
+  const onInit = useCallback(() => dispatch(fetchTopHeadlines()), [dispatch]);
+  const onQuery = useCallback(
+    (query) => dispatch(fetchHeadlinesBySearch(query)),
+    [dispatch],
+  );
+  const onSource = useCallback(
+    (source, sources) => dispatch(fetchHeadlinesBySource(source, sources)),
+    [dispatch],
+  );
+  const onNextPage = useCallback(
+    (currPage, url) => dispatch(fetchNextPage(currPage, url)),
+    [dispatch],
+  );
+  const onPrevPage = useCallback(
+    (currPage, url) => dispatch(fetchPreviousPage(currPage, url)),
+    [dispatch],
+  );
 
   useEffect(() => {
-    fetchTopHeadlines();
-  }, [fetchTopHeadlines]);
+    onInit();
+  }, [onInit]);
 
   return (
-    <div>
-      <h1>News App</h1>
-      <SearchBar makeSearch={props.fetchHeadlinesBySearch} />
-      <Articles articles={props.news.articles} />
-      {props.news.page > 1 && (
-        <button onClick={props.fetchPrevPage}>Prev</button>
+    <div className={classes.NewsApp}>
+      <div className={classes.Banner}>
+        <h1>Newsly</h1>
+        <h3>Finding news stories for you!</h3>
+      </div>
+      <SearchBar searchByQuery={onQuery} />
+      {news.fetching ? (
+        <Loader />
+      ) : (
+        <Articles
+          articles={news.articles}
+          searchBySource={(source) => onSource(source, news.sources)}
+        />
       )}
-      {props.news.page < props.news.totalPages && (
-        <button onClick={props.fetchNextPage}>Next</button>
-      )}
+      <div className={classes.Options}>
+        <button
+          className={classes.OptionButton}
+          onClick={() => onPrevPage(news.page, news.url)}
+          disabled={news.page === 1}
+        >
+          Previous
+        </button>
+        <button
+          className={classes.OptionButton}
+          onClick={() => onNextPage(news.page, news.url)}
+          disabled={news.page === news.totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
-}
-
-const mapStateToProps = (state) => {
-  return {
-    news: state.news,
-  };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchTopHeadlines: () => dispatch(fetchTopHeadlines()),
-    fetchHeadlinesBySearch: (search) =>
-      dispatch(fetchHeadlinesBySearch(search)),
-    fetchNextPage: () => dispatch(fetchNextPage()),
-    fetchPrevPage: () => dispatch(fetchPrevPage()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewsApp);
+export default NewsApp;

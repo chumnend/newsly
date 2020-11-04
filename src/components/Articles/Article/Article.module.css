@@ -1,0 +1,46 @@
+.Article {
+  margin: 0.8rem 0;
+  padding: 1rem;
+  background: #eee;
+  border-radius: 10px;
+}
+
+.Title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.Author {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.Description {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.Options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Source {
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  background: #ccc;
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
+
+.Link {
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  background: #ff2058;
+  color: #fff;
+}

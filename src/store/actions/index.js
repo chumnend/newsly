@@ -1,6 +1,13 @@
 export {
+  setArticles,
+  setURL,
+  addSource,
+  fetching,
+  fetchSuccess,
+  fetchError,
   fetchTopHeadlines,
   fetchHeadlinesBySearch,
+  fetchHeadlinesBySource,
   fetchNextPage,
-  fetchPrevPage,
+  fetchPreviousPage,
 } from './news.actions';
