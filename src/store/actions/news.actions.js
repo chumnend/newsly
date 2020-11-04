@@ -1,10 +1,16 @@
-import { SET_ARTICLES, SET_URL } from '../actionTypes';
-import axios from 'axios';
-import config from '../../config';
+import {
+  SET_ARTICLES,
+  SET_URL,
+  FETCHING,
+  FETCH_SUCCESS,
+  FETCH_ERROR,
+  FETCH_TOP_HEADLINES_REQUEST,
+  FETCH_HEADLINES_BY_QUERY_REQUEST,
+  FETCH_NEXT_PAGE_REQUEST,
+  FETCH_PREVIOUS_PAGE_REQUEST,
+} from '../actionTypes';
 
-const PAGE_SIZE = 10;
-
-const setArticles = (articles, page, totalPages) => {
+export const setArticles = (articles, page, totalPages) => {
   return {
     type: SET_ARTICLES,
     articles,
@@ -13,61 +19,57 @@ const setArticles = (articles, page, totalPages) => {
   };
 };
 
-const setURL = (url) => {
+export const setURL = (url) => {
   return {
     type: SET_URL,
     url,
   };
 };
 
+export const fetching = () => {
+  return {
+    type: FETCHING,
+  };
+};
+
+export const fetchSuccess = () => {
+  return {
+    type: FETCH_SUCCESS,
+  };
+};
+
+export const fetchError = (error) => {
+  return {
+    type: FETCH_ERROR,
+    error,
+  };
+};
+
 export const fetchTopHeadlines = () => {
-  return async (dispatch) => {
-    const url = `${config.prefix}/v2/top-headlines?apiKey=${config.key}&country=us&pageSize=${PAGE_SIZE}`;
-    dispatch(setURL(url));
-
-    const { data } = await axios.get(url);
-    const articles = data.articles;
-    const totalPages = Math.ceil(data.totalResults / PAGE_SIZE);
-
-    dispatch(setArticles(articles, 1, totalPages));
+  return {
+    type: FETCH_TOP_HEADLINES_REQUEST,
   };
 };
 
-export const fetchHeadlinesBySearch = (search) => {
-  return async (dispatch) => {
-    const url = `${config.prefix}/v2/everything?apiKey=${config.key}&q=${search}&pageSize=${PAGE_SIZE}`;
-    dispatch(setURL(url));
-
-    const { data } = await axios.get(url);
-    const articles = data.articles;
-    const totalPages = Math.ceil(data.totalResults / PAGE_SIZE);
-
-    dispatch(setArticles(articles, 1, totalPages));
+export const fetchHeadlinesBySearch = (query) => {
+  return {
+    type: FETCH_HEADLINES_BY_QUERY_REQUEST,
+    query,
   };
 };
 
-export const fetchNextPage = () => {
-  return async (dispatch, getState) => {
-    const currState = getState();
-    const { page, url } = currState.news;
-
-    const { data } = await axios.get(`${url}&page=${page + 1}`);
-    const articles = data.articles;
-    const totalPages = Math.ceil(data.totalResults / PAGE_SIZE);
-
-    dispatch(setArticles(articles, page + 1, totalPages));
+export const fetchNextPage = (currPage, url) => {
+  return {
+    type: FETCH_NEXT_PAGE_REQUEST,
+    currPage,
+    url,
   };
 };
 
-export const fetchPrevPage = () => {
-  return async (dispatch, getState) => {
-    const currState = getState();
-    const { page, url } = currState.news;
-
-    const { data } = await axios.get(`${url}&page=${page - 1}`);
-    const articles = data.articles;
-    const totalPages = Math.ceil(data.totalResults / PAGE_SIZE);
-
-    dispatch(setArticles(articles, page - 1, totalPages));
+export const fetchPreviousPage = (currPage, url) => {
+  return {
+    type: FETCH_PREVIOUS_PAGE_REQUEST,
+    currPage,
+    url,
   };
 };

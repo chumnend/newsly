@@ -1,9 +1,20 @@
-import { SET_ARTICLES, SET_URL } from '../actionTypes';
+import {
+  SET_ARTICLES,
+  SET_URL,
+  FETCHING,
+  FETCH_SUCCESS,
+  FETCH_ERROR,
+} from '../actionTypes';
 
 const initialState = {
+  fetching: false,
+  error: null,
   page: 1,
   totalPages: 1,
   articles: [],
+  url: '',
+  query: '',
+  sources: [],
 };
 
 export default (state = initialState, action) => {
@@ -19,6 +30,23 @@ export default (state = initialState, action) => {
       return {
         ...state,
         url: action.url,
+      };
+    case FETCHING:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case FETCH_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        error: null,
+      };
+    case FETCH_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        error: action.error,
       };
     default:
       return state;

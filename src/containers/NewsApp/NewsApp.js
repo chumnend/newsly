@@ -6,7 +6,7 @@ import {
   fetchTopHeadlines,
   fetchHeadlinesBySearch,
   fetchNextPage,
-  fetchPrevPage,
+  fetchPreviousPage,
 } from '../../store/actions';
 import classes from './NewsApp.module.css';
 
@@ -18,11 +18,17 @@ const NewsApp = () => {
   const dispatch = useDispatch();
   const onInit = useCallback(() => dispatch(fetchTopHeadlines()), [dispatch]);
   const onSearch = useCallback(
-    (search) => dispatch(fetchHeadlinesBySearch(search)),
+    (query) => dispatch(fetchHeadlinesBySearch(query)),
     [dispatch],
   );
-  const onNextPage = useCallback(() => dispatch(fetchNextPage()), [dispatch]);
-  const onPrevPage = useCallback(() => dispatch(fetchPrevPage()), [dispatch]);
+  const onNextPage = useCallback(
+    (currPage, url) => dispatch(fetchNextPage(currPage, url)),
+    [dispatch],
+  );
+  const onPrevPage = useCallback(
+    (currPage, url) => dispatch(fetchPreviousPage(currPage, url)),
+    [dispatch],
+  );
 
   useEffect(() => {
     onInit();
@@ -39,14 +45,14 @@ const NewsApp = () => {
       <div className={classes.Options}>
         <button
           className={classes.OptionButton}
-          onClick={onPrevPage}
+          onClick={() => onPrevPage(news.page, news.url)}
           disabled={news.page === 1}
         >
           Previous
         </button>
         <button
           className={classes.OptionButton}
-          onClick={onNextPage}
+          onClick={() => onNextPage(news.page, news.url)}
           disabled={news.page === news.totalPages}
         >
           Next
