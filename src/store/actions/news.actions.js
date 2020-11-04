@@ -1,11 +1,13 @@
 import {
   SET_ARTICLES,
   SET_URL,
+  ADD_SOURCE,
   FETCHING,
   FETCH_SUCCESS,
   FETCH_ERROR,
   FETCH_TOP_HEADLINES_REQUEST,
   FETCH_HEADLINES_BY_QUERY_REQUEST,
+  FETCH_HEADLINES_BY_SOURCE_REQUEST,
   FETCH_NEXT_PAGE_REQUEST,
   FETCH_PREVIOUS_PAGE_REQUEST,
 } from '../actionTypes';
@@ -23,6 +25,13 @@ export const setURL = (url) => {
   return {
     type: SET_URL,
     url,
+  };
+};
+
+export const addSource = (source) => {
+  return {
+    type: ADD_SOURCE,
+    source,
   };
 };
 
@@ -55,6 +64,14 @@ export const fetchHeadlinesBySearch = (query) => {
   return {
     type: FETCH_HEADLINES_BY_QUERY_REQUEST,
     query,
+  };
+};
+
+export const fetchHeadlinesBySource = (source, sources) => {
+  return {
+    type: FETCH_HEADLINES_BY_SOURCE_REQUEST,
+    source,
+    sources,
   };
 };
 

@@ -14,8 +14,11 @@ const Articles = (props) => {
           <Article
             key={article.url}
             title={article.title}
-            author={article.author ? article.author : 'Unknown'}
+            author={article.author || 'Unknown'}
+            description={article.description}
             url={article.url}
+            source={article.source}
+            searchBySource={props.searchBySource}
           />
         ))}
       </ul>
@@ -27,6 +30,7 @@ const Articles = (props) => {
 
 Articles.propTypes = {
   articles: PropTypes.array.isRequired,
+  searchBySource: PropTypes.func.isRequired,
 };
 
 export default Articles;

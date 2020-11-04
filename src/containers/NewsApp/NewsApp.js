@@ -6,6 +6,7 @@ import Loader from '../../components/Loader';
 import {
   fetchTopHeadlines,
   fetchHeadlinesBySearch,
+  fetchHeadlinesBySource,
   fetchNextPage,
   fetchPreviousPage,
 } from '../../store/actions';
@@ -18,8 +19,12 @@ const NewsApp = () => {
 
   const dispatch = useDispatch();
   const onInit = useCallback(() => dispatch(fetchTopHeadlines()), [dispatch]);
-  const onSearch = useCallback(
+  const onQuery = useCallback(
     (query) => dispatch(fetchHeadlinesBySearch(query)),
+    [dispatch],
+  );
+  const onSource = useCallback(
+    (source, sources) => dispatch(fetchHeadlinesBySource(source, sources)),
     [dispatch],
   );
   const onNextPage = useCallback(
@@ -41,8 +46,15 @@ const NewsApp = () => {
         <h1>Newsly</h1>
         <h3>Finding news stories for you!</h3>
       </div>
-      <SearchBar makeSearch={onSearch} />
-      {news.fetching ? <Loader /> : <Articles articles={news.articles} />}
+      <SearchBar searchByQuery={onQuery} />
+      {news.fetching ? (
+        <Loader />
+      ) : (
+        <Articles
+          articles={news.articles}
+          searchBySource={(source) => onSource(source, news.sources)}
+        />
+      )}
       <div className={classes.Options}>
         <button
           className={classes.OptionButton}

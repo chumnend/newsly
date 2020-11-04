@@ -3,28 +3,28 @@ import PropTypes from 'prop-types';
 import classes from './SearchBar.module.css';
 
 const SearchBar = (props) => {
-  const { makeSearch } = props;
+  const { searchByQuery } = props;
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (inputValue === inputRef.current.value && inputValue.length > 0) {
-        makeSearch(inputValue);
+        searchByQuery(inputValue);
       }
     }, 500);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [inputValue, inputRef, makeSearch]);
+  }, [inputValue, inputRef, searchByQuery]);
 
   const validInput = () => {
     return inputValue.trim().length > 0;
   };
 
   const handleSearch = () => {
-    makeSearch(inputValue);
+    searchByQuery(inputValue);
   };
 
   return (
@@ -50,7 +50,7 @@ const SearchBar = (props) => {
 };
 
 SearchBar.propTypes = {
-  makeSearch: PropTypes.func.isRequired,
+  searchByQuery: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

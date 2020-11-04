@@ -1,6 +1,7 @@
 import {
   SET_ARTICLES,
   SET_URL,
+  ADD_SOURCE,
   FETCHING,
   FETCH_SUCCESS,
   FETCH_ERROR,
@@ -30,6 +31,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         url: action.url,
+      };
+    case ADD_SOURCE:
+      return {
+        ...state,
+        sources: [...state.sources, action.source],
       };
     case FETCHING:
       return {

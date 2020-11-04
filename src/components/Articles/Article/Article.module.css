@@ -12,9 +12,29 @@
 }
 
 .Author {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-style: italic;
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.Description {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.Options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Source {
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  background: #ccc;
+  color: #000;
+  border: none;
+  cursor: pointer;
 }
 
 .Link {
