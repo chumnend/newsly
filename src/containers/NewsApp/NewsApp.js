@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Articles from '../../components/Articles';
 import SearchBar from '../../components/SearchBar';
+import Loader from '../../components/Loader';
 import {
   fetchTopHeadlines,
   fetchHeadlinesBySearch,
@@ -41,7 +42,7 @@ const NewsApp = () => {
         <h3>Finding news stories for you!</h3>
       </div>
       <SearchBar makeSearch={onSearch} />
-      <Articles articles={news.articles} />
+      {news.fetching ? <Loader /> : <Articles articles={news.articles} />}
       <div className={classes.Options}>
         <button
           className={classes.OptionButton}
