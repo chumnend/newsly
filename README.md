@@ -1,7 +1,7 @@
 # Newsly: Finding news stories for you!
 Newsly is a web application that utilizes the [News API](https://newsapi.org/) to 
 provide top news headlines. Users can also use the search bar to scrape news headlines
-matching the query term. It is build using React, Redux and Redux Saga.
+matching the query term. It is built using **React, Redux and Redux Saga**.
 
 ## Demo 
 ![newsly-capture](newsly-capture.gif)
